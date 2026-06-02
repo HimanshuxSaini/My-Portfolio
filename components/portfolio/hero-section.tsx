@@ -130,7 +130,7 @@ export function HeroSection() {
         />
 
         {/* Hero heading */}
-        <div className="overflow-hidden px-6 md:px-10">
+        <div className="px-6 md:px-10">
           <FadeIn delay={0.15} y={40}>
             <h1 className="hero-heading mt-6 w-full whitespace-nowrap text-[9.5vw] font-black uppercase leading-none tracking-tight sm:mt-4 sm:text-[10vw] md:-mt-5 md:text-[10.5vw] lg:text-[11vw]">
               Hi, i&apos;m himanshu
