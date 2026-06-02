@@ -85,8 +85,33 @@ export function Magnet({
         setPos({ x: 0, y: 0 })
       }
     }
+
+    const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
+      if (e.gamma === null || e.beta === null) return
+      // gamma is left-to-right tilt in degrees, where right is positive
+      // beta is front-to-back tilt in degrees, where front is positive
+      const gamma = Math.max(-45, Math.min(45, e.gamma))
+      const beta = Math.max(0, Math.min(90, e.beta)) - 45 // Assume 45 degrees is standard resting position
+      
+      // Calculate distances for a smooth parallax
+      const distX = gamma * 4
+      const distY = beta * 4
+
+      setActive(true)
+      setPos({ x: distX / strength, y: distY / strength })
+    }
+
     window.addEventListener('mousemove', handleMove)
-    return () => window.removeEventListener('mousemove', handleMove)
+    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleDeviceOrientation)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+        window.removeEventListener('deviceorientation', handleDeviceOrientation)
+      }
+    }
   }, [padding, strength])
 
   return (

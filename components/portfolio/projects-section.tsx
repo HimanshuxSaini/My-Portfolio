@@ -6,6 +6,7 @@ import { LiveProjectButton } from './primitives'
 
 type ProjectImage = {
   src: string
+  mobileSrc?: string
   className?: string
   containerClassName?: string
 }
@@ -56,10 +57,20 @@ const PROJECTS: Project[] = [
     tags: ['React.js', 'TailwindCSS', 'MongoDB'],
     year: '2024',
     col1: [
-      { src: '/nextbuy-1.png' },
+      { 
+        src: '/nextbuy-1.png', 
+        mobileSrc: '/nextbuy-3.png',
+        className: 'object-contain scale-[0.55] sm:scale-100 sm:p-6', 
+        containerClassName: 'bg-[#F9FAFB] sm:bg-[#121826]' 
+      },
       { src: '/nextbuy-2.png', className: 'object-contain', containerClassName: 'bg-[#0f1115]' }
     ],
-    col2: { src: '/nextbuy-3.png' },
+    col2: { 
+      src: '/nextbuy-3.png', 
+      mobileSrc: '/nextbuy-1.png',
+      className: 'object-contain p-6 sm:p-0 sm:scale-[0.55]', 
+      containerClassName: 'bg-[#121826] sm:bg-[#F9FAFB]' 
+    },
     url: '#',
   },
   {
@@ -170,15 +181,15 @@ function ProjectCard({
       </div>
 
       {project.isGithubCard ? (
-        <div className="group flex flex-1 flex-col items-center justify-center gap-6 rounded-3xl border border-white/10 bg-[#121826] text-center transition-colors hover:border-[#B600A8]/30">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="h-20 w-20 text-[#D7E2EA] transition-transform duration-500 group-hover:scale-110 group-hover:text-[#B600A8]">
+        <div className="group flex flex-1 min-h-0 flex-col md:flex-row items-center justify-center gap-3 sm:gap-6 md:gap-10 rounded-3xl border border-white/10 bg-[#121826] text-center md:text-left p-4 sm:p-8 transition-colors hover:border-[#B600A8]/30">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="h-10 w-10 sm:h-16 sm:w-16 md:h-24 md:w-24 shrink-0 text-[#D7E2EA] transition-transform duration-500 group-hover:scale-110 group-hover:text-[#B600A8]">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
           </svg>
-          <div>
-            <h3 className="hero-heading text-3xl font-black uppercase tracking-tight text-[#D7E2EA] sm:text-4xl md:text-5xl">
+          <div className="flex-1 max-w-xl">
+            <h3 className="hero-heading text-xl font-black uppercase tracking-tight text-[#D7E2EA] sm:text-4xl md:text-5xl">
               Check out my GitHub
             </h3>
-            <p className="mx-auto mt-4 max-w-md text-sm font-light leading-relaxed text-[#D7E2EA]/60">
+            <p className="mx-auto md:mx-0 mt-2 sm:mt-4 text-xs sm:text-sm font-light leading-relaxed text-[#D7E2EA]/60">
               For more open-source projects, tools, and code snippets, visit my GitHub profile.
             </p>
           </div>
@@ -186,41 +197,89 @@ function ProjectCard({
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-xs font-bold uppercase tracking-widest text-[#D7E2EA] transition-all hover:scale-105 hover:bg-[#B600A8] hover:border-[#B600A8] hover:text-white"
+            className="mt-2 md:mt-0 shrink-0 rounded-full border border-white/20 bg-white/5 px-6 py-3 sm:px-8 sm:py-4 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#D7E2EA] transition-all hover:scale-105 hover:bg-[#B600A8] hover:border-[#B600A8] hover:text-white"
           >
             Visit Profile
           </a>
         </div>
       ) : (
-        <div className="group flex min-h-0 flex-1 gap-3 sm:gap-4 md:gap-6">
-          <div className="flex w-2/5 flex-col gap-3 sm:gap-4 md:gap-6">
+        <div className="group flex min-h-0 flex-1 flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6">
+          <div className="flex w-full sm:w-2/5 flex-row sm:flex-col gap-3 sm:gap-4 md:gap-6">
             <div className={`${RADIUS} w-full flex-1 min-h-0 relative overflow-hidden ${typeof project.col1[0] !== 'string' && project.col1[0].containerClassName ? project.col1[0].containerClassName : ''}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={typeof project.col1[0] === 'string' ? project.col1[0] : project.col1[0].src || '/placeholder.svg'}
-                alt={`${project.name} preview 1`}
-                loading="lazy"
-                className={`absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-[1.01] ${typeof project.col1[0] !== 'string' && project.col1[0].className ? project.col1[0].className : 'object-cover'}`}
-              />
+              {typeof project.col1[0] !== 'string' && project.col1[0].mobileSrc ? (
+                <>
+                  <img
+                    src={project.col1[0].mobileSrc}
+                    alt={`${project.name} preview 1 mobile`}
+                    loading="lazy"
+                    className={`absolute inset-0 h-full w-full transition-transform duration-500 sm:hidden ${project.col1[0].className || 'object-cover'}`}
+                  />
+                  <img
+                    src={project.col1[0].src}
+                    alt={`${project.name} preview 1 desktop`}
+                    loading="lazy"
+                    className={`absolute inset-0 h-full w-full transition-transform duration-500 hidden sm:block ${project.col1[0].className || 'object-cover'}`}
+                  />
+                </>
+              ) : (
+                <img
+                  src={typeof project.col1[0] === 'string' ? project.col1[0] : project.col1[0].src || '/placeholder.svg'}
+                  alt={`${project.name} preview 1`}
+                  loading="lazy"
+                  className={`absolute inset-0 h-full w-full transition-transform duration-500 ${typeof project.col1[0] !== 'string' && project.col1[0].className ? project.col1[0].className : 'object-cover'}`}
+                />
+              )}
             </div>
-            <div className={`${RADIUS} w-full flex-[1.4] min-h-0 relative overflow-hidden ${typeof project.col1[1] !== 'string' && project.col1[1].containerClassName ? project.col1[1].containerClassName : ''}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={typeof project.col1[1] === 'string' ? project.col1[1] : project.col1[1].src || '/placeholder.svg'}
-                alt={`${project.name} preview 2`}
-                loading="lazy"
-                className={`absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-[1.01] ${typeof project.col1[1] !== 'string' && project.col1[1].className ? project.col1[1].className : 'object-cover'}`}
-              />
+            <div className={`${RADIUS} w-full flex-1 sm:flex-[1.4] min-h-0 relative overflow-hidden ${typeof project.col1[1] !== 'string' && project.col1[1].containerClassName ? project.col1[1].containerClassName : ''}`}>
+              {typeof project.col1[1] !== 'string' && project.col1[1].mobileSrc ? (
+                <>
+                  <img
+                    src={project.col1[1].mobileSrc}
+                    alt={`${project.name} preview 2 mobile`}
+                    loading="lazy"
+                    className={`absolute inset-0 h-full w-full transition-transform duration-500 sm:hidden ${project.col1[1].className || 'object-cover'}`}
+                  />
+                  <img
+                    src={project.col1[1].src}
+                    alt={`${project.name} preview 2 desktop`}
+                    loading="lazy"
+                    className={`absolute inset-0 h-full w-full transition-transform duration-500 hidden sm:block ${project.col1[1].className || 'object-cover'}`}
+                  />
+                </>
+              ) : (
+                <img
+                  src={typeof project.col1[1] === 'string' ? project.col1[1] : project.col1[1].src || '/placeholder.svg'}
+                  alt={`${project.name} preview 2`}
+                  loading="lazy"
+                  className={`absolute inset-0 h-full w-full transition-transform duration-500 ${typeof project.col1[1] !== 'string' && project.col1[1].className ? project.col1[1].className : 'object-cover'}`}
+                />
+              )}
             </div>
           </div>
-          <div className={`${RADIUS} w-3/5 min-h-0 relative overflow-hidden ${typeof project.col2 !== 'string' && project.col2.containerClassName ? project.col2.containerClassName : ''}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={typeof project.col2 === 'string' ? project.col2 : project.col2.src || '/placeholder.svg'}
-              alt={`${project.name} preview 3`}
-              loading="lazy"
-              className={`absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-[1.01] ${typeof project.col2 !== 'string' && project.col2.className ? project.col2.className : 'object-cover'}`}
-            />
+          <div className={`${RADIUS} w-full sm:w-3/5 flex-1 sm:flex-none min-h-0 relative overflow-hidden ${typeof project.col2 !== 'string' && project.col2.containerClassName ? project.col2.containerClassName : ''}`}>
+            {typeof project.col2 !== 'string' && project.col2.mobileSrc ? (
+              <>
+                <img
+                  src={project.col2.mobileSrc}
+                  alt={`${project.name} preview 3 mobile`}
+                  loading="lazy"
+                  className={`absolute inset-0 h-full w-full transition-transform duration-500 sm:hidden ${project.col2.className || 'object-cover'}`}
+                />
+                <img
+                  src={project.col2.src}
+                  alt={`${project.name} preview 3 desktop`}
+                  loading="lazy"
+                  className={`absolute inset-0 h-full w-full transition-transform duration-500 hidden sm:block ${project.col2.className || 'object-cover'}`}
+                />
+              </>
+            ) : (
+              <img
+                src={typeof project.col2 === 'string' ? project.col2 : project.col2.src || '/placeholder.svg'}
+                alt={`${project.name} preview 3`}
+                loading="lazy"
+                className={`absolute inset-0 h-full w-full transition-transform duration-500 ${typeof project.col2 !== 'string' && project.col2.className ? project.col2.className : 'object-cover'}`}
+              />
+            )}
           </div>
         </div>
       )}
