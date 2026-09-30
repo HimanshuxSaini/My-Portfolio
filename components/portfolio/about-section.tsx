@@ -24,8 +24,8 @@ const TIMELINE = [
   { year: '2022', label: 'Started B.Tech (CSE) at GIET' },
   { year: 'Jun 24', label: 'Web Dev Intern at OctaNet Pvt. Ltd.' },
   { year: 'Aug 24', label: 'Web Dev Intern at Oasis Infobyte' },
-  { year: 'Jul 25', label: 'Web Dev Intern at Webunitech' },
-  { year: '2026', label: 'Expected Graduation' },
+  { year: 'Jul 25', label: 'Web Dev Intern at Webunitech Solutions llp' },
+  { year: 'Jan 26 - Present', label: 'Full Stack Developer at Webunitech Solutions llp' },
 ]
 
 export function AboutSection() {
